@@ -1,0 +1,13 @@
+{
+  "name": "visitor-counter-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AWS Lambda backend for a resume visitor counter",
+  "main": "src/handler.js",
+  "dependencies": {
+    "aws-sdk": "^2.1693.0"
+  },
+  "scripts": {
+    "test": "node test/simulate.js"
+  }
+}
