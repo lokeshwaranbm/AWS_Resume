@@ -20,8 +20,9 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <meta name="visitor-counter-api" content="https://h9dwzyjjkk.execute-api.ap-south-1.amazonaws.com/counter" />
     <link rel="stylesheet" href="styles.css" />
-    <script defer src="script.js"></script>
+    <script defer src="script.js?v=2"></script>
   </head>
   <body>
     <div class="bg-orb bg-orb-1"></div>
@@ -337,10 +338,10 @@
         </div>
         <div class="counter-card reveal">
           <div>
-            <h3>AWS Visitor Counter Placeholder</h3>
-            <p>Ready to connect to an AWS backend later using API Gateway, Lambda, and DynamoDB.</p>
+            <h3>AWS Visitor Counter</h3>
+            <p id="visitor-counter-status">Loading visitor count from the AWS backend.</p>
           </div>
-          <div class="counter-value" aria-label="Visitor count placeholder">0000</div>
+          <div class="counter-value" aria-label="Visitor count" data-visitor-count>0000</div>
         </div>
       </section>
     </main>

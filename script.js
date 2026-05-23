@@ -5,9 +5,15 @@ const themeToggle = document.querySelector("[data-theme-toggle]");
 const exportResumeButton = document.querySelector("[data-export-resume]");
 const backToTopButton = document.querySelector("[data-back-to-top]");
 const navOverlay = document.querySelector("[data-nav-overlay]");
+const visitorCountElement = document.querySelector("[data-visitor-count]");
+const visitorCounterStatus = document.querySelector("#visitor-counter-status");
 const root = document.documentElement;
 const themeIcon = themeToggle?.querySelector("i");
 const revealElements = document.querySelectorAll(".reveal");
+const visitorCounterApiUrl =
+  document.querySelector('meta[name="visitor-counter-api"]')?.content ||
+  window.VISITOR_COUNTER_API_URL ||
+  "";
 
 root.classList.remove("no-js");
 
@@ -75,6 +81,52 @@ function updateBackToTopVisibility() {
 updateBackToTopVisibility();
 window.addEventListener("scroll", updateBackToTopVisibility, { passive: true });
 
+async function updateVisitorCounter() {
+  if (!visitorCountElement) {
+    return;
+  }
+
+  if (!visitorCounterApiUrl) {
+    if (visitorCounterStatus) {
+      visitorCounterStatus.textContent = "Add your API Gateway endpoint to enable the live counter.";
+    }
+    visitorCountElement.textContent = "0000";
+    return;
+  }
+
+  try {
+    if (visitorCounterStatus) {
+      visitorCounterStatus.textContent = "Updating count...";
+    }
+
+    const response = await fetch(visitorCounterApiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ action: "increment" }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Visitor counter request failed with status ${response.status}`);
+    }
+
+    const data = await response.json();
+    const count = Number(data.visitCount ?? data.count ?? 0);
+    visitorCountElement.textContent = String(count).padStart(4, "0");
+
+    if (visitorCounterStatus) {
+      visitorCounterStatus.textContent = "Live counter powered by API Gateway, Lambda, and DynamoDB.";
+    }
+  } catch (error) {
+    console.error("Failed to update visitor counter:", error);
+    if (visitorCounterStatus) {
+      visitorCounterStatus.textContent = "Live counter unavailable. Showing placeholder value.";
+    }
+    visitorCountElement.textContent = "0000";
+  }
+}
+
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -91,3 +143,4 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((element) => observer.observe(element));
+updateVisitorCounter();
