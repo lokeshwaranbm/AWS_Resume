@@ -224,6 +224,10 @@ main {
   margin-top: 1rem;
 }
 
+.hero + .recruiter-snapshot {
+  margin-top: 1.9rem;
+}
+
 .hero-copy,
 .profile-card,
 .card,
@@ -231,6 +235,7 @@ main {
 .skill-card,
 .project-card,
 .experience-card,
+.snapshot-card,
 .achievement-card,
 .counter-card,
 .contact-strip {
@@ -407,7 +412,7 @@ main {
 
 .contact-strip {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.9rem;
   padding: 1rem;
   border-radius: 1.5rem;
@@ -473,6 +478,7 @@ main {
 .skill-card,
 .project-card,
 .experience-card,
+.snapshot-card,
 .achievement-card,
 .counter-card {
   border-radius: 1.5rem;
@@ -482,7 +488,8 @@ main {
 .timeline-grid,
 .skills-grid,
 .project-grid,
-.achievement-grid {
+.achievement-grid,
+.snapshot-grid {
   display: grid;
   gap: 1rem;
 }
@@ -492,7 +499,7 @@ main {
 }
 
 .skills-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .project-grid {
@@ -503,10 +510,15 @@ main {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.snapshot-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .timeline-card,
 .skill-card,
 .project-card,
 .experience-card,
+.snapshot-card,
 .achievement-card,
 .counter-card {
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
@@ -516,6 +528,7 @@ main {
 .skill-card:hover,
 .project-card:hover,
 .experience-card:hover,
+.snapshot-card:hover,
 .achievement-card:hover,
 .counter-card:hover {
   transform: translateY(-4px);
@@ -540,6 +553,37 @@ main {
   white-space: nowrap;
 }
 
+.snapshot-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  min-height: 11.2rem;
+}
+
+.snapshot-card i {
+  width: 2.7rem;
+  height: 2.7rem;
+  border-radius: 0.85rem;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  box-shadow: var(--shadow-soft);
+}
+
+.snapshot-card span {
+  color: var(--text-soft);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.snapshot-card strong {
+  line-height: 1.45;
+  letter-spacing: -0.015em;
+}
+
 .skill-card h3,
 .project-card h3,
 .experience-card h3,
@@ -549,6 +593,12 @@ main {
   align-items: center;
   gap: 0.65rem;
   font-size: 1.05rem;
+}
+
+.skill-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 13.4rem;
 }
 
 .skill-card h3 i,
@@ -562,6 +612,7 @@ main {
   flex-wrap: wrap;
   gap: 0.65rem;
   margin-top: 1rem;
+  align-content: flex-start;
 }
 
 .badge {
@@ -579,6 +630,28 @@ main {
 .project-card {
   position: relative;
   overflow: hidden;
+}
+
+.project-card p {
+  margin: 0.65rem 0 0.85rem;
+}
+
+.project-grid .project-card:nth-child(-n + 3) {
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 88%, rgba(63, 120, 180, 0.08)), var(--surface));
+}
+
+.project-grid .project-card:nth-child(1) {
+  box-shadow: 0 18px 44px rgba(22, 61, 107, 0.2);
+  transform-origin: center;
+}
+
+.project-grid .project-card:nth-child(1):hover {
+  transform: translateY(-6px);
+}
+
+.project-grid .project-card:nth-child(n + 4) {
+  background: color-mix(in srgb, var(--surface) 92%, var(--surface-alt));
 }
 
 .project-card::after {
@@ -613,12 +686,73 @@ main {
   font-weight: 700;
 }
 
+.project-grid .project-card:nth-child(-n + 3) .project-tag {
+  background: color-mix(in srgb, rgba(22, 61, 107, 0.18) 70%, transparent);
+}
+
+.project-grid .project-card:nth-child(n + 4) .project-tag {
+  background: color-mix(in srgb, rgba(63, 120, 180, 0.12) 68%, transparent);
+}
+
+.experience-card .timeline-header {
+  margin-bottom: 1rem;
+}
+
+.experience-card .timeline-header h3 {
+  font-size: clamp(1.18rem, 2.1vw, 1.45rem);
+}
+
+.experience-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.72rem;
+}
+
+.experience-list li {
+  position: relative;
+  padding-left: 1.15rem;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+
+.experience-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72rem;
+  width: 0.52rem;
+  height: 0.52rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 0 0 3px rgba(63, 120, 180, 0.12);
+}
+
 .counter-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
   background: linear-gradient(135deg, rgba(22, 61, 107, 0.12), rgba(63, 120, 180, 0.07));
+  position: relative;
+  overflow: hidden;
+}
+
+.counter-card::before {
+  content: "AWS Serverless Integration";
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.3rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(63, 120, 180, 0.35);
+  background: rgba(63, 120, 180, 0.1);
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .counter-value {
@@ -633,6 +767,7 @@ main {
   font-weight: 800;
   letter-spacing: 0.12em;
   box-shadow: var(--shadow);
+  font-family: "JetBrains Mono", "Cascadia Code", "Consolas", monospace;
 }
 
 .footer {
@@ -756,7 +891,8 @@ main {
   .timeline-grid,
   .skills-grid,
   .project-grid,
-  .achievement-grid {
+  .achievement-grid,
+  .snapshot-grid {
     grid-template-columns: 1fr !important;
   }
 
@@ -816,8 +952,13 @@ main {
   .timeline-grid,
   .skills-grid,
   .project-grid,
-  .achievement-grid {
+  .achievement-grid,
+  .snapshot-grid {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .grid-two,
@@ -903,6 +1044,7 @@ main {
   .skill-card,
   .project-card,
   .experience-card,
+  .snapshot-card,
   .achievement-card,
   .counter-card,
   .contact-strip {
@@ -914,6 +1056,7 @@ main {
   .skills-grid,
   .project-grid,
   .achievement-grid,
+  .snapshot-grid,
   .footer {
     grid-template-columns: 1fr;
   }
@@ -931,6 +1074,12 @@ main {
     min-width: 0;
     height: 5.5rem;
     border-radius: 1.2rem;
+  }
+
+  .counter-card::before {
+    position: static;
+    display: inline-flex;
+    margin-bottom: 0.6rem;
   }
 
   .topbar.is-open {
